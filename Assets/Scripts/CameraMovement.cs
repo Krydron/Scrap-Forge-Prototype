@@ -29,3 +29,7 @@ public class CameraMovement : MonoBehaviour
         player.Rotate(Vector3.up * mouseX);
     }
 }
+
+
+//Source: https://www.youtube.com/watch?v=Tz-2Z0vLLt8&t=418s
+
