@@ -1,25 +1,51 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     Vector2 moveInput;
-    Rigidbody rigidbody;
+    Rigidbody rb;
     [SerializeField] float speed = 1.0f;//Speed of the player
     private bool paused;
     [SerializeField] GameObject pauseMenu;
 
+    bool canJump = true;
+    public float jumpForce = 50;
+
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         //Moves player
-        rigidbody.velocity = transform.TransformDirection(new Vector3(moveInput.x * speed, rigidbody.velocity.y, moveInput.y * speed));
+        rb.velocity = transform.TransformDirection(new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed));
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jump();
+        }
     }
+
+    void jump()
+    {
+        if (canJump)
+        {
+            canJump = false;
+            GetComponent<Rigidbody>().AddForce(this.gameObject.transform.up * jumpForce);
+        }
+    }
+
+    void OnCollisionEnter(Collision collidingObject)
+    {
+        if (collidingObject.gameObject.layer == 8)
+        {
+            canJump = true;
+        }
+    }
+
+
 
     void OnMove(InputValue input)//When a movement key is pressed update the move input
     {

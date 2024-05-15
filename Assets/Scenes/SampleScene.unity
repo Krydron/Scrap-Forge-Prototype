@@ -806,6 +806,7 @@ GameObject:
   - component: {fileID: 176285667}
   - component: {fileID: 176285666}
   - component: {fileID: 176285669}
+  - component: {fileID: 176285670}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -916,6 +917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   pauseMenu: {fileID: 1705485495}
+  jumpForce: 250
 --- !u!114 &176285667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,6 +990,21 @@ MonoBehaviour:
   playerHealth: 100
   healthBar: {fileID: 1898956290}
   gameOverMenu: {fileID: 944604812}
+--- !u!114 &176285670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176285661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c54db0c6a78f44a923015360a7fd7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 60
+  dashDuration: 0.2
+  dashCooldown: 1
 --- !u!1 &223974226
 GameObject:
   m_ObjectHideFlags: 0
