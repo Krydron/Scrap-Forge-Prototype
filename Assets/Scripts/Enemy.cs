@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
         idle
     }
 
+    public GameObject player;
     public List<Vector3> patrolWaypoints; //list of waypoints to patrol
 
     private EnemyState currentState = EnemyState.patrolling; //current AI state
@@ -53,6 +54,20 @@ public class Enemy : MonoBehaviour
                 transform.LookAt(patrolWaypoints[currentWaypointIndex], Vector3.up); //look at next waypoint
             }
         }
+        if (currentState == EnemyState.attacking)
+        {
+            transform.LookAt(player.transform.position);
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            Vector3 stepAmount = player.transform.position - transform.position;
+            transform.position += new Vector3(stepAmount.x, 0, stepAmount.z).normalized * patrolSpeed * Time.deltaTime;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Entered");
+        if (other.tag == "Player")
+            currentState = EnemyState.attacking;
     }
 
     private int mod(int x, int m) //modulus function
