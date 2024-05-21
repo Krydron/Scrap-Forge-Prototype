@@ -16,13 +16,14 @@ public class Enemy : MonoBehaviour
     }
 
     public GameObject player;
+    public GameObject AlertSprite; //gameobject exclaimation mark
     public List<Vector3> patrolWaypoints; //list of waypoints to patrol
 
     private EnemyState currentState = EnemyState.patrolling; //current AI state
     private int currentWaypointIndex = 0; //index of currently targeted waypoint
     private float currentPatrolTime = 0; //used for lerping
     float patrolTime; //time taken to patrol between waypoints
-    const float patrolSpeed = 0.5f; //speed at which to patrol
+    const float patrolSpeed = 1.5f; //speed at which to patrol
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,11 @@ public class Enemy : MonoBehaviour
         }
         if (currentState == EnemyState.attacking)
         {
+            if (!AlertSprite.activeSelf) //if excplaimation mark isn't active
+            {
+                AlertSprite.SetActive(true); //set active
+            }
+            AlertSprite.transform.LookAt(Camera.main.transform.position);
             transform.LookAt(player.transform.position);
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
             Vector3 stepAmount = player.transform.position - transform.position;
