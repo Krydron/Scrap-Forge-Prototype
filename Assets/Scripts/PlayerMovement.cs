@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
 
     bool canJump = true;
     public float jumpForce = 50;
+    private int jumpCount = 0; 
+    private int maxJumps = 2; //Max number of available jumps
 
     private void Start()
     {
@@ -30,10 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
     void jump()
     {
-        if (canJump)
+        if (jumpCount < maxJumps)
         {
-            canJump = false;
-            GetComponent<Rigidbody>().AddForce(this.gameObject.transform.up * jumpForce);
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // Reset Y velocity for consistent jump height
+            rb.AddForce(this.gameObject.transform.up * jumpForce, ForceMode.Impulse);
+            jumpCount++;
         }
     }
 
@@ -41,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collidingObject.gameObject.layer == 8)
         {
+            jumpCount = 0; //Reset jump count after landing
             canJump = true;
         }
     }
